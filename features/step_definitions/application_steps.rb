@@ -6,5 +6,5 @@ When(/^I visit the home page$/) do
 end 
 
 Then(/^I should see the home page$/) do
-  expect(page).to have_content("trivia")
+  expect(page).to have_content("Welcome to")
 end
