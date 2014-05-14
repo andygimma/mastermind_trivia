@@ -1,7 +1,8 @@
 TriviaApp::Application.routes.draw do
+  devise_for :users
+  resource :questions
   root "static_pages#index"
   get "about", to: "static_pages#about", as: "about"
-  resource :questions
 # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
