@@ -1,3 +1,14 @@
-<h1>Add a question</h1>
-<p><strong>Questions form will be here</strong></p>
-<p>This will allow you to add questions, once the database is fully set up (which will happen the next work day I have on this)</p>
+<h1>Add a Question</h1>
+
+<%= form_for @question do |f| %>
+  Question: <%= f.text_field :question %><br />
+  Answer: <%= f.text_field :answer %><br />
+  Type: <%= f.select(:question_type, [['Regular', 'Regular'], ['Halftime', 'Halftime'], ['Bonus', 'Bonus'],]) %>
+  <br>
+  Difficulty (1 is easiest): <%= f.select(:difficulty, [['1', 1], ['2', 2], ['3',3], ['4',4], ['5',5],]) %>
+  <br>
+
+
+  <%= f.submit "Submit", class: 'btn btn-large btn-primary' %>
+<% end %>
+
