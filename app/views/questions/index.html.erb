@@ -1,0 +1,9 @@
+<h2>All Questions</h2>
+<% @questions.each do |question| -%>
+  ___________
+  <p>Q: <%= question.question%><p>
+  <p>A: <%= question.answer%></p>
+  <p>type: <%= question.question_type%></p>
+  <p>difficulty (1 is easiest): <%= question.difficulty %>
+  <br>
+<% end -%>

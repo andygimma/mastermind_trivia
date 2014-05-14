@@ -1,4 +1,6 @@
 TriviaApp::Application.routes.draw do
+  get "all_questions", to: "questions#index", as: "all_questions"
+
   devise_for :users
   resource :questions
   root "static_pages#index"
