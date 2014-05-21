@@ -22,7 +22,9 @@
 	  <div class="col-lg-10 text-left">
 	    <p>Q: <%= @question.question%><p>
 	    <p>A: <%= @question.answer%></p>
-	    <p>Notes: <%= @question.notes%></p>
+	    <% if @question.notes %>
+	      <p>Notes: <%= @question.notes%></p>
+	    <% end %>
 	  </div>
 	  <div class="col-lg-1 text-left">
 	  </div>
