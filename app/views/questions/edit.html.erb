@@ -1,2 +1,20 @@
-<h1>Questions#edit</h1>
-<p>Find me in app/views/questions/edit.html.erb</p>
+<h1>Edit Programs</h1>
+
+<% if signed_in?%>
+
+  <%= form_for(@question) do |f| %>
+    Question: <%= f.text_field :question %><br />
+    Answer: <%= f.text_field :answer %><br />
+    Type: <%= f.select(:question_type, [['Regular', 'Regular'], ['Halftime', 'Halftime'], ['Bonus', 'Bonus'],]) %>
+    <br>
+    Difficulty (1 is easiest): <%= f.select(:difficulty, [['1', 1], ['2', 2], ['3',3], ['4',4], ['5',5],]) %>
+    <br>
+    <%= f.submit "save", class: 'btn btn-large btn-primary' %>
+  <% end %>
+
+  <%= link_to "Delete", @question, method: :delete,
+      data: { confirm: "Delete: You sure? Cannot undo a delete." } %> | 
+
+<% else %>
+	redirect_to programs_path
+<% end %>

@@ -5,6 +5,8 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+    question_id = params["id"]
+    @question = Question.find(question_id) 
   end
 
   def index
@@ -12,7 +14,6 @@ class QuestionsController < ApplicationController
   end
   
   def show
-    ### If signed in
     question_id = params["id"]
     @question = Question.find(question_id) 
   end
@@ -20,7 +21,21 @@ class QuestionsController < ApplicationController
   def create
     @question = current_user.questions.build(question_params)
     @question.save
-    redirect_to all_questions_path
+    redirect_to questions_path
+  end
+  
+  def update
+    question_id = params["id"]
+    @question = current_user.questions.find(params[:id])
+    @question.update(question_params)
+    redirect_to question_path(@question)  
+  end
+  
+  def destroy
+    question_id = params["id"]
+    question = current_user.questions.find(question_id)
+    question.destroy
+    redirect_to questions_path
   end
  
   private
