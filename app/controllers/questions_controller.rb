@@ -10,7 +10,8 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @questions = Question.all
+    @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC')
+
   end
   
   def show
@@ -40,6 +41,6 @@ class QuestionsController < ApplicationController
  
   private
     def question_params
-     params.require(:question).permit(:question, :answer, :question_type, :difficulty)
+     params.require(:question).permit(:question, :answer, :question_type, :difficulty, :category, :notes)
     end
 end

@@ -1,9 +1,43 @@
 <h2>All Questions</h2>
+<br>
+
+		      
 <% @questions.each do |question| -%>
-  ___________
-  <p>Q: <a href="/questions/<%= question.id %>"><%= question.question%></a><p>
-  <p>A: <%= question.answer%></p>
-  <p>type: <%= question.question_type%></p>
-  <p>difficulty (1 is easiest): <%= question.difficulty %>
-  <br>
+<!--   <div class="container" style="border: 2px solid black"> -->
+<hr>
+  
+      <div class="row">
+	  <div class="col-lg-12 text-center">
+	    <p><a href="/questions/<%= question.id %>">Click here to view, edit or delete</a></p>
+	  </div>
+
+      	  <div class="col-lg-4 text-center">
+      	    <p><button type="button" class="btn btn-default btn-lg">type: <%= question.question_type%></button></p>
+	  </div>
+	  
+	  <div class="col-lg-4 text-center">
+	    <p><button type="button" class="btn btn-default btn-lg">category: <%= question.category%></button></p>
+	  </div>
+	  
+	  <div class="col-lg-4 text-center">
+	    <p><button type="button" class="btn btn-default btn-lg">difficulty: <%= question.difficulty %></button></p>
+	  </div>
+	  
+      </div>
+      
+      
+      <div class="row">
+      	  <div class="col-lg-1 text-left">
+	  </div>
+	  <div class="col-lg-10 text-left">
+	    <p>Q: <%= question.question%><p>
+	    <p>A: <%= question.answer%></p>
+	    <p>Notes: <%= question.notes%></p>
+	  </div>
+	  <div class="col-lg-1 text-left">
+	  </div>
+      </div>
+
+<!--   </div> -->
 <% end -%>
+<%= will_paginate @questions %>

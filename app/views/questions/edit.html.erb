@@ -1,20 +1,21 @@
-<h1>Edit Programs</h1>
+<h1>Edit</h1>
 
 <% if signed_in?%>
 
   <%= form_for(@question) do |f| %>
+    Category: <%= f.collection_select(:category, Category.all, :name, :name) %>
+    <br>
     Question: <%= f.text_field :question %><br />
     Answer: <%= f.text_field :answer %><br />
     Type: <%= f.select(:question_type, [['Regular', 'Regular'], ['Halftime', 'Halftime'], ['Bonus', 'Bonus'],]) %>
     <br>
     Difficulty (1 is easiest): <%= f.select(:difficulty, [['1', 1], ['2', 2], ['3',3], ['4',4], ['5',5],]) %>
     <br>
+    Notes: <%= f.text_field :notes %><br />
+
     <%= f.submit "save", class: 'btn btn-large btn-primary' %>
   <% end %>
-
-  <%= link_to "Delete", @question, method: :delete,
-      data: { confirm: "Delete: You sure? Cannot undo a delete." } %> | 
-
+<br>
 <% else %>
 	redirect_to programs_path
 <% end %>

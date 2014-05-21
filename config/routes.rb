@@ -1,6 +1,7 @@
 TriviaApp::Application.routes.draw do
   devise_for :users
   resources :questions
+  resources :categories
   root "static_pages#index"
   get "about", to: "static_pages#about", as: "about"
 # The priority is based upon order of creation: first created -> highest priority.

@@ -43,7 +43,8 @@
 		      </li>
 		      <li><a href="/questions/new">New Question</a>
 		      </li>
-		      <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+		      <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+		      </li>
 		    <% else %>
 		      <li><%= link_to('Login', new_user_session_path)  %>  
 		      </li>

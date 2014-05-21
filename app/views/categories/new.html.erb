@@ -1,0 +1,7 @@
+<h1>Add a new category</h1>
+<%= form_for @category do |f| %>
+  Name: <%= f.text_field :name %><br />
+
+
+  <%= f.submit "Submit", class: 'btn btn-large btn-primary' %>
+<% end %>
