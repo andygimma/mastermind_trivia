@@ -5,13 +5,14 @@
   <br>
   <a href="/categories/new">Add a new category</a>
   <br>
-  Question: <%= f.text_field :question %><br />
-  Answer: <%= f.text_field :answer %><br />
   Type: <%= f.select(:question_type, [['Regular', 'Regular'], ['Halftime', 'Halftime'], ['Bonus', 'Bonus'],]) %>
   <br>
   Difficulty (1 is easiest): <%= f.select(:difficulty, [['1', 1], ['2', 2], ['3',3], ['4',4], ['5',5],]) %>
   <br>
-  Notes: <%= f.text_field :notes %><br />
+  Question: <%= f.text_area( :question, size: "80x5") %><br />
+  Answer: <%= f.text_area( :answer, size: "80x5") %><br />
+
+  Notes: <%= f.text_area( :notes, size: "80x5") %><br />
 
 
   <%= f.submit "Submit", class: 'btn btn-large btn-primary' %>
