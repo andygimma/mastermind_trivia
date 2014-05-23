@@ -1,11 +1,100 @@
+<script type="text/javascript">
+$(function() {
+
+  // Set up variables. Get url values, and define booleans stating that the urls are not set
+  var category = getUrlValue("category");
+  var difficulty = getUrlValue("difficulty");
+  var difficulty_set = false;
+  var category_set = false;
+  
+  
+  // check to see if the variables are set. If so, set booleans to true
+  if (typeof category !== 'undefined' && category != null && category != "undefined") {
+    $( "#select_category" ).val(category);
+    category_set = true;
+  }
+  
+  if (typeof difficulty !== 'undefined' && category != null && difficulty != "undefined") {
+    $( "#difficulty_level" ).val(difficulty);
+    difficulty_set = true;
+  }
+  
+
+  // on select changes, set a url string and redirect to the correct url to get the correct query
+  $( "#select_category" ).change(function() {
+    var url = "/questions";
+    var new_category = $("#select_category").val()
+    var category_string = "?category=" + new_category;
+    var difficulty_string = '&difficulty=All';
+    
+    var final_url = url+category_string;
+    if (difficulty_set == true) {
+      difficulty_string = "&difficulty=" + difficulty;
+    }
+    final_url = final_url + difficulty_string;
+
+    window.location.replace(final_url);
+  });
+  
+  $( "#difficulty_level" ).change(function() {
+    var url = "/questions";
+    var new_difficulty = $("#difficulty_level").val();
+    var category_string = "?category=";
+    var difficulty_string = '&difficulty=' + new_difficulty;
+    
+    if (category_set == true) {
+      category_string = "?category=" + category;
+    }
+    final_url = url + category_string + difficulty_string;
+
+    window.location.replace(final_url);  });
+  
+  
+  // helper function to get url parameter values
+  function getUrlValue(VarSearch){
+      var SearchString = window.location.search.substring(1);
+      var VariableArray = SearchString.split('&');
+      for(var i = 0; i < VariableArray.length; i++){
+	  var KeyValuePair = VariableArray[i].split('=');
+	  if(KeyValuePair[0] == VarSearch){
+	      return KeyValuePair[1];
+	  }
+      }
+  }
+});
+
+</script>
+
 <h2>All Questions</h2>
 <br>
+      <div class="row">
 
+      	  <div class="col-lg-6 text-center">
+	    Sort by category: 
+	      <%= select "select", "category", @categories.map { |h| [h.name, h.name] }, {prompt: "All"} %>
+	  </div>
+	    
+	  <div class="col-lg-6 text-center">
+	    Sort by difficulty: 
+	    <select id="difficulty_level">
+	      <option value="All">All</option>
+	      <option value="1">1</option>
+	      <option value="2">2</option>
+	      <option value="3">3</option>
+	      <option value="4">4</option>
+	      <option value="4">5</option>
+	    </select>
+	  </div>
+	  
+      </div>
+	  <div class="col-lg-12 text-center">
+	    <p class="sort_by_message"></p>
+	  </div>
 		      
 <% @questions.each do |question| -%>
 <!--   <div class="container" style="border: 2px solid black"> -->
-<hr>
-  
+  <hr>
+
       <div class="row">
 	  <div class="col-lg-12 text-center">
 	    <p><a href="/questions/<%= question.id %>">Click here to view, edit or delete</a></p>

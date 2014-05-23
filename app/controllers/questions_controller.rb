@@ -10,8 +10,32 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC')
+    category = params["category"]
+    difficulty = params["difficulty"]
+    @questions = nil
+    
+    # handle blank and "All"
+    if category and difficulty
+      if category == "" or category == "All"
+	if difficulty == "All" or difficulty == ""
+	  @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC')
+	else
+	  @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC').where("difficulty = ?", difficulty)
+	end
+      elsif difficulty == "" or difficulty == "All"
+	if category == "All" or category == ""
+	  @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC')
+	else
+	  @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC').where("category = ?", category)
+	end      else
+	@questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC').where("difficulty = ? AND category = ?", difficulty, category)
+      end
 
+    else
+      @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC')
+
+    end
+    @categories = Category.all
   end
   
   def show
