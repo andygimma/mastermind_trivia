@@ -2,7 +2,7 @@ class AdminController < ApplicationController
   before_action :authenticate_user!
 
   def index
-#     current_user.update_attribute :admin, true
+    current_user.update_attribute :admin, true
 
     if not current_user.admin?
       redirect_to root_path
