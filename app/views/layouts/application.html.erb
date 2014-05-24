@@ -43,6 +43,10 @@
 		      </li>
 		      <li><a href="/questions/new">New Question</a>
 		      </li>
+		      <% if current_user.admin %>
+			<li> <a href="/admin">Admin</a>
+			</li>
+		      <% end %>
 		      <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
 		      </li>
 		    <% else %>
