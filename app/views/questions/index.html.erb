@@ -103,13 +103,21 @@ $(function() {
 });
 
 </script>
-<p id="loading_search_message">Loading search...</p>
-<div class="ui-widget">
-  <label for="tags">Search: </label>
-  <input id="tags">
-  <input type="submit" value="Submit" id="submit_button">
 
-</div>
+      <div class="row">
+	    
+	  <div class="col-lg-12 text-center">
+	    <p id="loading_search_message">Loading search...</p>
+	    
+	    <div class="ui-widget">
+	      <label for="tags">Search: </label>
+	      <input class="search_input" id="tags" style="width:80%;">
+	      <input type="submit" value="Submit" id="submit_button">
+
+	    </div>
+	  </div>
+	  
+      </div>
 <h2>All Questions</h2>
 <br>
       <div class="row">
@@ -137,7 +145,6 @@ $(function() {
 	  </div>
 		      
 <% @questions.each do |question| -%>
-<!--   <div class="container" style="border: 2px solid black"> -->
   <hr>
 
       <div class="row">
