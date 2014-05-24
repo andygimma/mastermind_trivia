@@ -2,8 +2,12 @@
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script type="text/javascript">
 $(function() {
+  $( ".ui-widget" ).hide();
   var real_data = null;
   $.getJSON( "api/questions", function( data ) {
+  $( ".ui-widget" ).show();
+  $( "#loading_search_message" ).hide();
+
   console.log(data);
   real_data = data;
     $( "#tags" ).autocomplete({
@@ -99,6 +103,7 @@ $(function() {
 });
 
 </script>
+<p id="loading_search_message">Loading search...</p>
 <div class="ui-widget">
   <label for="tags">Search: </label>
   <input id="tags">
