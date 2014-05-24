@@ -1,10 +1,14 @@
 TriviaApp::Application.routes.draw do
+  get "admin/index"
   get "api/questions"
   devise_for :users
   resources :questions
   resources :categories
   root "static_pages#index"
   get "about", to: "static_pages#about", as: "about"
+  get "admin", to: "admin#index", as: "admin"
+  match "create_user", to: "admin#create_user", via: [:get, :post]
+
 # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

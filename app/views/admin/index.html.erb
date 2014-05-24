@@ -1,0 +1,26 @@
+<h1>Admin</h1>
+
+<div class="row">
+    <div class="col-lg-9 text-left">
+      <h2>Create User</h2>
+      <form name="create_user" action="/create_user" method="post">
+	Email: <input type="text" name="email">
+	<br>
+	Password: <input type="text" name="password">
+	<input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+	<input type="submit" value="Submit">
+      </form>
+    </div>
+    <div class="col-lg-3 text-left">
+      
+      <h2>Users</h2>
+      <% @users.each do |user| -%>
+	<p><%= user.email %></p>
+      <% end -%>
+    </div>
+</div>
+
+
+
+
+
