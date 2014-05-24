@@ -1,4 +1,5 @@
 TriviaApp::Application.routes.draw do
+  get "api/questions"
   devise_for :users
   resources :questions
   resources :categories

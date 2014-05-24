@@ -1,5 +1,40 @@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script type="text/javascript">
 $(function() {
+  var real_data = null;
+  $.getJSON( "api/questions", function( data ) {
+  console.log(data);
+  real_data = data;
+    $( "#tags" ).autocomplete({
+      source: data
+    })
+  });
+  $( "#submit_button" ).click(function() {
+    var search = $("#tags").val();
+    
+    var search_id = getByValue3(real_data, search);
+    
+    var url = '/questions/' + search_id;
+   window.location.replace(url);
+
+    
+    function getByValue3(arr, value) {
+      for (var i = 0; i < arr.length; i++) {
+	if (arr[i].value == search) {
+	  console.log(arr[i].id);
+	  return arr[i].id;
+	}
+      }
+    }
+  });
+});
+
+</script>
+<script type="text/javascript">
+$(function() {
+
+
 
   // Set up variables. Get url values, and define booleans stating that the urls are not set
   var category = getUrlValue("category");
@@ -64,7 +99,12 @@ $(function() {
 });
 
 </script>
+<div class="ui-widget">
+  <label for="tags">Search: </label>
+  <input id="tags">
+  <input type="submit" value="Submit" id="submit_button">
 
+</div>
 <h2>All Questions</h2>
 <br>
       <div class="row">
