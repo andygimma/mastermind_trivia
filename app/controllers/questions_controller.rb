@@ -11,7 +11,7 @@ class QuestionsController < ApplicationController
 
   def index
     category = params["category"]
-    difficulty = params["difficulty"].to_s
+    difficulty = params["difficulty"]
     question_type = params["question_type"]
     
     if category or difficulty or question_type
@@ -24,6 +24,7 @@ class QuestionsController < ApplicationController
       end
       
       if difficulty == ""
+	difficulty = -1
 	difficulty_string = "difficulty != ? AND "
       end
       
