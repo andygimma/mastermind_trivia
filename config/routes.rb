@@ -8,6 +8,9 @@ TriviaApp::Application.routes.draw do
   get "about", to: "static_pages#about", as: "about"
   get "admin", to: "admin#index", as: "admin"
   match "create_user", to: "admin#create_user", via: [:get, :post]
+  match "admin/delete_user/:id", to: "admin#delete_user", via: [:get]
+  match "admin/make_admin/:id", to: "admin#make_admin", via: [:get]
+  match "admin/remove_admin/:id", to: "admin#remove_admin", via: [:get]
 
 # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -173,6 +173,9 @@ $(function() {
 	  <div class="col-lg-10 text-left">
 	    <p>Q: <%= question.question%><p>
 	    <p>A: <%= question.answer%></p>
+	    <% if question.suggested_song %>
+	      <p>Song: <%= question.suggested_song %></p>
+	    <% end %>
 	    <% if question.notes %>
 	`    <p>Notes: <%= question.notes%></p>
 	    <% end %>

@@ -20,4 +20,22 @@ class AdminController < ApplicationController
     
     redirect_to admin_path
   end
+  
+  def delete_user
+    User.find(params["id"]).destroy
+    redirect_to admin_path
+  end
+  
+  def make_admin
+    @user = User.find(params["id"])
+    @user.update_attribute(:admin, true)
+    redirect_to admin_path
+  end
+  
+  def remove_admin
+    @user = User.find(params["id"])
+    @user.update_attribute(:admin, false)
+    redirect_to admin_path
+  end
+  
 end
