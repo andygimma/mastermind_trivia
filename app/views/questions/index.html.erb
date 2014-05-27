@@ -17,13 +17,13 @@ $(function() {
   $( "#submit_button" ).click(function() {
     var search = $("#tags").val();
     
-    var search_id = getByValue3(real_data, search);
+    var search_id = getByValue(real_data, search);
     
     var url = '/questions/' + search_id;
    window.location.replace(url);
 
     
-    function getByValue3(arr, value) {
+    function getByValue(arr, value) {
       for (var i = 0; i < arr.length; i++) {
 	if (arr[i].value == search) {
 	  console.log(arr[i].id);
@@ -37,56 +37,32 @@ $(function() {
 </script>
 <script type="text/javascript">
 $(function() {
-
-
-
   // Set up variables. Get url values, and define booleans stating that the urls are not set
   var category = getUrlValue("category");
   var difficulty = getUrlValue("difficulty");
-  var difficulty_set = false;
-  var category_set = false;
+  var question_type = getUrlValue("question_type");
   
-  
-  // check to see if the variables are set. If so, set booleans to true
-  if (typeof category !== 'undefined' && category != null && category != "undefined") {
-    $( "#select_category" ).val(category);
-    category_set = true;
-  }
-  
-  if (typeof difficulty !== 'undefined' && category != null && difficulty != "undefined") {
-    $( "#difficulty_level" ).val(difficulty);
-    difficulty_set = true;
-  }
-  
+  $("#select_category").val(category);
+  $("#difficulty_level").val(difficulty);
+  $("#select_question_type").val(question_type);
 
-  // on select changes, set a url string and redirect to the correct url to get the correct query
-  $( "#select_category" ).change(function() {
-    var url = "/questions";
-    var new_category = $("#select_category").val()
-    var category_string = "?category=" + new_category;
-    var difficulty_string = '&difficulty=All';
-    
-    var final_url = url+category_string;
-    if (difficulty_set == true) {
-      difficulty_string = "&difficulty=" + difficulty;
-    }
-    final_url = final_url + difficulty_string;
-
-    window.location.replace(final_url);
-  });
-  
-  $( "#difficulty_level" ).change(function() {
-    var url = "/questions";
+  var url = "/questions";
+  var new_question_type = $("#select_question_type").val();
+  var category_string = "?category=";
+  var difficulty_string = "&difficulty=";
+  var question_type_string = "&question_type=";
+  $( ".select_query" ).change(function() {
     var new_difficulty = $("#difficulty_level").val();
-    var category_string = "?category=";
-    var difficulty_string = '&difficulty=' + new_difficulty;
+    console.log(new_difficulty);
+    var new_category = $("#select_category").val();
+    var new_question_type = $("#select_question_type").val();
     
-    if (category_set == true) {
-      category_string = "?category=" + category;
-    }
-    final_url = url + category_string + difficulty_string;
+    query_url = url + category_string + new_category + difficulty_string + new_difficulty + question_type_string + new_question_type;
+    
+    window.location.replace(query_url); 
 
-    window.location.replace(final_url);  });
+
+  });
   
   
   // helper function to get url parameter values
@@ -122,15 +98,19 @@ $(function() {
 <br>
       <div class="row">
 
-      	  <div class="col-lg-6 text-center">
+      	  <div class="col-lg-4 text-center">
 	    Sort by category: 
-	      <%= select "select", "category", @categories.map { |h| [h.name, h.name] }, {prompt: "All"} %>
+	      <%= select "select", "category", @categories.map { |h| [h.name, h.name] }, {prompt: "All"}, {:class => "select_query"} %>
+	  </div>
+	  <div class="col-lg-4 text-center">
+	    Sort by type: 
+	      <%= select "select", "question_type", ["Regular", "Halftime", "Bonus"], {prompt: "All"}, {:class => "select_query"} %>
 	  </div>
 	    
-	  <div class="col-lg-6 text-center">
+	  <div class="col-lg-4 text-center">
 	    Sort by difficulty: 
-	    <select id="difficulty_level">
-	      <option value="All">All</option>
+	    <select id="difficulty_level" class="select_query">
+	      <option value="">All</option>
 	      <option value="1">1</option>
 	      <option value="2">2</option>
 	      <option value="3">3</option>

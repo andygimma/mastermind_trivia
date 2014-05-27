@@ -12,29 +12,35 @@ class QuestionsController < ApplicationController
   def index
     category = params["category"]
     difficulty = params["difficulty"]
-    @questions = nil
+    question_type = params["question_type"]
     
-    # handle blank and "All"
-    if category and difficulty
-      if category == "" or category == "All"
-	if difficulty == "All" or difficulty == ""
-	  @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC')
-	else
-	  @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC').where("difficulty = ?", difficulty)
-	end
-      elsif difficulty == "" or difficulty == "All"
-	if category == "All" or category == ""
-	  @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC')
-	else
-	  @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC').where("category = ?", category)
-	end      else
-	@questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC').where("difficulty = ? AND category = ?", difficulty, category)
+    if category or difficulty or question_type
+      category_string = "category = ? AND "
+      difficulty_string = "difficulty = ? AND "
+      question_type_string = "question_type = ?"
+      
+      if category == ""
+	category_string = "category != ? AND "
       end
-
+      
+      if difficulty == ""
+	difficulty_string = "difficulty != ? AND "
+      end
+      
+      if question_type == ""
+	question_type_string = "question_type != ?"
+      end
+      
+      query_string = category_string + difficulty_string + question_type_string
+      
+      
+      
+      @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC').where(query_string, category, difficulty, question_type)
     else
       @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC')
-
     end
+
+# 
     @categories = Category.all
   end
   
