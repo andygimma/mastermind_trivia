@@ -51,7 +51,7 @@ class QuestionsController < ApplicationController
   
   def update
     question_id = params["id"]
-    @question = current_user.questions.find(params[:id])
+    @question = Question.find(params[:id])
     @question.update(question_params)
     redirect_to question_path(@question)  
   end
