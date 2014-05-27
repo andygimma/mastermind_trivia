@@ -42,8 +42,11 @@ $(function() {
   var difficulty = getUrlValue("difficulty");
   var question_type = getUrlValue("question_type");
   
-  alert(category);
   
+  if (category.indexOf("%20") != -1) {
+    var category = category.replace("%20", " ");
+  }
+
   $("#select_category").val(category);
   $("#difficulty_level").val(difficulty);
   $("#select_question_type").val(question_type);
