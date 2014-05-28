@@ -42,8 +42,8 @@ $(function() {
   var difficulty = getUrlValue("difficulty");
   var question_type = getUrlValue("question_type");
   
-  
-  if (category.indexOf("%20") != -1) {
+  if (typeof category !== 'undefined' && category.indexOf("%20") != -1) {
+  alert(1);
     var category = category.replace("%20", " ");
   }
 

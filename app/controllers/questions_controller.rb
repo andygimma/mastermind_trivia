@@ -14,27 +14,27 @@ class QuestionsController < ApplicationController
     difficulty = params["difficulty"]
     question_type = params["question_type"]
     
+    # see if params are set
     if category or difficulty or question_type
-      category_string = "category = ? AND "
-      difficulty_string = "difficulty = ? AND "
-      question_type_string = "question_type = ?"
       
-      if category == ""
-	category_string = "category != ? AND "
-      end
-      
-      if difficulty == ""
-	difficulty = -1
-	difficulty_string = "difficulty != ? AND "
-      end
-      
-      if question_type == ""
-	question_type_string = "question_type != ?"
-      end
+      #set query string to use in MODEL.where()
+      # if param = "" then look for all by searching for all != "" 
+      # this works because these have to be set.
+      # else search the attribute with the given param value
+      category_string = case category
+			when "" then "category != ? AND "
+			else "category = ? AND "
+			end
+      difficulty_string = case difficulty
+			when "" then "difficulty != ? AND "
+			else "difficulty = ? AND "
+			end
+      question_type_string = case question_type
+			when "" then "question_type != ?"
+			else "question_type = ? "
+			end
       
       query_string = category_string + difficulty_string + question_type_string
-      
-      
       
       @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC').where(query_string, category, difficulty, question_type)
     else
