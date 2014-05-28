@@ -14,9 +14,6 @@ class QuestionsController < ApplicationController
     difficulty = params["difficulty"]
     question_type = params["question_type"]
     
-    if difficulty == ""
-      difficulty = -1
-    end
     
     # see if params are set
     if category or difficulty or question_type
@@ -39,7 +36,9 @@ class QuestionsController < ApplicationController
 			end
       
       query_string = category_string + difficulty_string + question_type_string
-      
+      if difficulty == ""
+	difficulty = -1
+      end
       @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC').where(query_string, category, difficulty, question_type)
     else
       @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC')
