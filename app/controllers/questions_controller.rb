@@ -14,6 +14,10 @@ class QuestionsController < ApplicationController
     difficulty = params["difficulty"]
     question_type = params["question_type"]
     
+    if difficulty == ""
+      difficulty = -1
+    end
+    
     # see if params are set
     if category or difficulty or question_type
       
