@@ -10,28 +10,12 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    category = params["category"]
-    difficulty = params["difficulty"]
-    question_type = params["question_type"]
-    
     
     # a bit of a hack.
     # first, see if params are set, if so, you'll need a query
     # if a particular attribute returns a query of '' then you don't want to search for it. So rather than come up with a series of cases to see which queries to run, we came up with a single case. If an attribute is set to search '', set it to search the opposite of that, since it's really asking for all, and since those fields are required.
-    if category or difficulty or question_type
+    @questions = get_questions_by_params(params)
 
-      category_string = get_category_query_string(category)
-      difficulty_string = get_difficulty_query_string(difficulty)
-      question_type_string = get_question_type_query_string(question_type)
-      
-      query_string = category_string + difficulty_string + question_type_string
-      
-      difficulty_int = set_difficulty_to_int(difficulty)
-
-      @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC').where(query_string, category, difficulty, question_type)
-    else
-      @questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC')
-    end
     
     @categories = Category.all
   end
@@ -92,5 +76,22 @@ class QuestionsController < ApplicationController
 	difficulty = -1
       end
       difficulty
+    end
+    
+    def get_questions_by_params(params)
+      if params.has_key?(:category) or params.has_key?(:difficulty) or params.has_key?(:question_type)
+
+	category_string = get_category_query_string(params[:category])
+	difficulty_string = get_difficulty_query_string(params[:difficulty])
+	question_type_string = get_question_type_query_string(params[:question_type])
+	
+	query_string = category_string + difficulty_string + question_type_string
+	
+	difficulty_int = set_difficulty_to_int(params[:difficulty])
+
+	@questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC').where(query_string, params[:category], difficulty_int, params[:question_type])
+      else
+	@questions = Question.paginate(:page => params[:page], :per_page => 5).order('created_at DESC')
+      end
     end
 end
